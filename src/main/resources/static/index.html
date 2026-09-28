@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Bus Pass Tracker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: #cbd5e1;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1e293b;
+        }
+
+        button {
+            padding: 9px 15px;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #334155;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            margin-right: 5px;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #1e293b;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .actions {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 900px) {
+
+            .card {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 1000px;
+            }
+
+            form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            input,
+            select,
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🚌 Student Bus Pass Tracker</h1>
+
+    <p>Student Management Dashboard</p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- ADD STUDENT -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>➕ Add Student</h2>
+
+        <form id="studentForm">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Student Name"
+                required
+            >
+
+            <input
+                type="text"
+                id="registerNumber"
+                placeholder="Register Number"
+                required
+            >
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                type="text"
+                id="department"
+                placeholder="Department"
+                required
+            >
+
+            <input
+                type="text"
+                id="year"
+                placeholder="Year"
+                required
+            >
+
+            <button type="submit">
+                Add Student
+            </button>
+
+        </form>
+
+        <p id="studentMessage" class="message"></p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ADD BUS PASS -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>🎫 Add Bus Pass</h2>
+
+        <form id="busPassForm">
+
+            <input
+                type="text"
+                id="passNumber"
+                placeholder="Pass Number"
+                required
+            >
+
+            <input
+                type="text"
+                id="busRoute"
+                placeholder="Bus Route"
+                required
+            >
+
+            <input
+                type="text"
+                id="boardingPoint"
+                placeholder="Boarding Point"
+                required
+            >
+
+            <input
+                type="text"
+                id="destination"
+                placeholder="Destination"
+                required
+            >
+
+            <input
+                type="date"
+                id="validFrom"
+                required
+            >
+
+            <input
+                type="date"
+                id="validUntil"
+                required
+            >
+
+            <select id="status" required>
+
+                <option value="">
+                    Select Status
+                </option>
+
+                <option value="ACTIVE">
+                    ACTIVE
+                </option>
+
+                <option value="EXPIRED">
+                    EXPIRED
+                </option>
+
+                <option value="CANCELLED">
+                    CANCELLED
+                </option>
+
+            </select>
+
+            <select id="studentId" required>
+
+                <option value="">
+                    Select Student
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Add Bus Pass
+            </button>
+
+        </form>
+
+        <p id="busPassMessage" class="message"></p>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- STUDENTS -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>👨‍🎓 Students</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Register Number</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Year</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BUS PASSES -->
+    <!-- ========================= -->
+
+    <div class="card">
+
+        <h2>🎟️ Bus Passes</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Pass Number</th>
+                    <th>Student</th>
+                    <th>Route</th>
+                    <th>Boarding Point</th>
+                    <th>Destination</th>
+                    <th>Valid From</th>
+                    <th>Valid Until</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="busPassTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+// ==========================================
+// LOAD STUDENTS
+// ==========================================
+
+function loadStudents() {
+
+    fetch('/students')
+
+        .then(response => response.json())
+
+        .then(students => {
+
+            const table =
+                document.getElementById('studentTable');
+
+            const studentSelect =
+                document.getElementById('studentId');
+
+            table.innerHTML = '';
+
+            studentSelect.innerHTML =
+                '<option value="">Select Student</option>';
+
+
+            students.forEach(student => {
+
+                const row =
+                    document.createElement('tr');
+
+                row.innerHTML = `
+
+                    <td>${student.id}</td>
+
+                    <td>${student.name}</td>
+
+                    <td>${student.registerNumber}</td>
+
+                    <td>${student.email}</td>
+
+                    <td>${student.department}</td>
+
+                    <td>${student.year}</td>
+
+                    <td class="actions">
+
+                        <button
+                            class="edit-btn"
+                            onclick="editStudent(${student.id})">
+                            ✏️ Edit
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteStudent(${student.id})">
+                            🗑️ Delete
+                        </button>
+
+                    </td>
+
+                `;
+
+                table.appendChild(row);
+
+
+                const option =
+                    document.createElement('option');
+
+                option.value = student.id;
+
+                option.textContent =
+                    student.name +
+                    ' (' +
+                    student.registerNumber +
+                    ')';
+
+                studentSelect.appendChild(option);
+
+            });
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                'Error loading students:',
+                error
+            );
+
+        });
+
+}
+
+
+// ==========================================
+// LOAD BUS PASSES
+// ==========================================
+
+function loadBusPasses() {
+
+    fetch('/bus-passes')
+
+        .then(response => response.json())
+
+        .then(passes => {
+
+            const table =
+                document.getElementById('busPassTable');
+
+            table.innerHTML = '';
+
+
+            passes.forEach(pass => {
+
+                const row =
+                    document.createElement('tr');
+
+                row.innerHTML = `
+
+                    <td>${pass.id}</td>
+
+                    <td>${pass.passNumber}</td>
+
+                    <td>${pass.student.name}</td>
+
+                    <td>${pass.busRoute}</td>
+
+                    <td>${pass.boardingPoint}</td>
+
+                    <td>${pass.destination}</td>
+
+                    <td>${pass.validFrom}</td>
+
+                    <td>${pass.validUntil}</td>
+
+                    <td class="status">
+                        ${pass.status}
+                    </td>
+
+                    <td class="actions">
+
+                        <button
+                            class="edit-btn"
+                            onclick="editBusPass(${pass.id})">
+                            ✏️ Edit
+                        </button>
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteBusPass(${pass.id})">
+                            🗑️ Delete
+                        </button>
+
+                    </td>
+
+                `;
+
+                table.appendChild(row);
+
+            });
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                'Error loading bus passes:',
+                error
+            );
+
+        });
+
+}
+
+
+// ==========================================
+// ADD STUDENT
+// ==========================================
+
+document
+    .getElementById('studentForm')
+    .addEventListener('submit', function(event) {
+
+        event.preventDefault();
+
+
+        const student = {
+
+            name:
+                document.getElementById('name').value,
+
+            registerNumber:
+                document.getElementById(
+                    'registerNumber'
+                ).value,
+
+            email:
+                document.getElementById('email').value,
+
+            department:
+                document.getElementById(
+                    'department'
+                ).value,
+
+            year:
+                document.getElementById('year').value
+
+        };
+
+
+        fetch('/students', {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+
+            body:
+                JSON.stringify(student)
+
+        })
+
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(
+                    'Failed to add student'
+                );
+            }
+
+            return response.json();
+
+        })
+
+        .then(() => {
+
+            const message =
+                document.getElementById(
+                    'studentMessage'
+                );
+
+            message.textContent =
+                'Student added successfully!';
+
+            message.style.color = 'green';
+
+            document
+                .getElementById('studentForm')
+                .reset();
+
+            loadStudents();
+
+        })
+
+        .catch(error => {
+
+            const message =
+                document.getElementById(
+                    'studentMessage'
+                );
+
+            message.textContent =
+                'Error adding student.';
+
+            message.style.color = 'red';
+
+            console.error(error);
+
+        });
+
+    });
+
+
+// ==========================================
+// ADD BUS PASS
+// ==========================================
+
+document
+    .getElementById('busPassForm')
+    .addEventListener('submit', function(event) {
+
+        event.preventDefault();
+
+
+        const busPass = {
+
+            passNumber:
+                document.getElementById(
+                    'passNumber'
+                ).value,
+
+            busRoute:
+                document.getElementById(
+                    'busRoute'
+                ).value,
+
+            boardingPoint:
+                document.getElementById(
+                    'boardingPoint'
+                ).value,
+
+            destination:
+                document.getElementById(
+                    'destination'
+                ).value,
+
+            validFrom:
+                document.getElementById(
+                    'validFrom'
+                ).value,
+
+            validUntil:
+                document.getElementById(
+                    'validUntil'
+                ).value,
+
+            status:
+                document.getElementById(
+                    'status'
+                ).value,
+
+            student: {
+
+                id: parseInt(
+                    document.getElementById(
+                        'studentId'
+                    ).value
+                )
+
+            }
+
+        };
+
+
+        fetch('/bus-passes', {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type':
+                    'application/json'
+            },
+
+            body:
+                JSON.stringify(busPass)
+
+        })
+
+        .then(response => {
+
+            if (!response.ok) {
+                throw new Error(
+                    'Failed to add bus pass'
+                );
+            }
+
+            return response.json();
+
+        })
+
+        .then(() => {
+
+            const message =
+                document.getElementById(
+                    'busPassMessage'
+                );
+
+            message.textContent =
+                'Bus pass added successfully!';
+
+            message.style.color = 'green';
+
+            document
+                .getElementById('busPassForm')
+                .reset();
+
+            loadBusPasses();
+
+        })
+
+        .catch(error => {
+
+            const message =
+                document.getElementById(
+                    'busPassMessage'
+                );
+
+            message.textContent =
+                'Error adding bus pass.';
+
+            message.style.color = 'red';
+
+            console.error(error);
+
+        });
+
+    });
+
+
+// ==========================================
+// EDIT STUDENT
+// ==========================================
+
+function editStudent(id) {
+
+    fetch('/students/' + id)
+
+        .then(response => response.json())
+
+        .then(student => {
+
+            const name =
+                prompt(
+                    'Enter student name:',
+                    student.name
+                );
+
+            if (name === null) return;
+
+
+            const registerNumber =
+                prompt(
+                    'Enter register number:',
+                    student.registerNumber
+                );
+
+            if (registerNumber === null) return;
+
+
+            const email =
+                prompt(
+                    'Enter email:',
+                    student.email
+                );
+
+            if (email === null) return;
+
+
+            const department =
+                prompt(
+                    'Enter department:',
+                    student.department
+                );
+
+            if (department === null) return;
+
+
+            const year =
+                prompt(
+                    'Enter year:',
+                    student.year
+                );
+
+            if (year === null) return;
+
+
+            const updatedStudent = {
+
+                name: name,
+
+                registerNumber:
+                    registerNumber,
+
+                email: email,
+
+                department: department,
+
+                year: year
+
+            };
+
+
+            fetch('/students/' + id, {
+
+                method: 'PUT',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify(
+                        updatedStudent
+                    )
+
+            })
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        'Failed to update student'
+                    );
+                }
+
+                return response.json();
+
+            })
+
+            .then(() => {
+
+                alert(
+                    'Student updated successfully!'
+                );
+
+                loadStudents();
+
+                loadBusPasses();
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    'Error updating student.'
+                );
+
+            });
+
+        });
+
+}
+
+
+// ==========================================
+// DELETE STUDENT
+// ==========================================
+
+function deleteStudent(id) {
+
+    const confirmed =
+        confirm(
+            'Are you sure you want to delete this student?'
+        );
+
+    if (!confirmed) return;
+
+
+    fetch('/students/' + id, {
+
+        method: 'DELETE'
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                'Failed to delete student'
+            );
+        }
+
+        alert(
+            'Student deleted successfully!'
+        );
+
+        loadStudents();
+
+        loadBusPasses();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            'Error deleting student.'
+        );
+
+    });
+
+}
+
+
+// ==========================================
+// EDIT BUS PASS
+// ==========================================
+
+function editBusPass(id) {
+
+    fetch('/bus-passes/' + id)
+
+        .then(response => response.json())
+
+        .then(pass => {
+
+            const passNumber =
+                prompt(
+                    'Enter pass number:',
+                    pass.passNumber
+                );
+
+            if (passNumber === null) return;
+
+
+            const busRoute =
+                prompt(
+                    'Enter bus route:',
+                    pass.busRoute
+                );
+
+            if (busRoute === null) return;
+
+
+            const boardingPoint =
+                prompt(
+                    'Enter boarding point:',
+                    pass.boardingPoint
+                );
+
+            if (boardingPoint === null) return;
+
+
+            const destination =
+                prompt(
+                    'Enter destination:',
+                    pass.destination
+                );
+
+            if (destination === null) return;
+
+
+            const validFrom =
+                prompt(
+                    'Enter valid from date:',
+                    pass.validFrom
+                );
+
+            if (validFrom === null) return;
+
+
+            const validUntil =
+                prompt(
+                    'Enter valid until date:',
+                    pass.validUntil
+                );
+
+            if (validUntil === null) return;
+
+
+            const status =
+                prompt(
+                    'Enter status (ACTIVE / EXPIRED / CANCELLED):',
+                    pass.status
+                );
+
+            if (status === null) return;
+
+
+            const updatedPass = {
+
+                passNumber:
+                    passNumber,
+
+                busRoute:
+                    busRoute,
+
+                boardingPoint:
+                    boardingPoint,
+
+                destination:
+                    destination,
+
+                validFrom:
+                    validFrom,
+
+                validUntil:
+                    validUntil,
+
+                status:
+                    status,
+
+                student: {
+
+                    id: pass.student.id
+
+                }
+
+            };
+
+
+            fetch('/bus-passes/' + id, {
+
+                method: 'PUT',
+
+                headers: {
+                    'Content-Type':
+                        'application/json'
+                },
+
+                body:
+                    JSON.stringify(updatedPass)
+
+            })
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        'Failed to update bus pass'
+                    );
+                }
+
+                return response.json();
+
+            })
+
+            .then(() => {
+
+                alert(
+                    'Bus pass updated successfully!'
+                );
+
+                loadBusPasses();
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                alert(
+                    'Error updating bus pass.'
+                );
+
+            });
+
+        });
+
+}
+
+
+// ==========================================
+// DELETE BUS PASS
+// ==========================================
+
+function deleteBusPass(id) {
+
+    const confirmed =
+        confirm(
+            'Are you sure you want to delete this bus pass?'
+        );
+
+    if (!confirmed) return;
+
+
+    fetch('/bus-passes/' + id, {
+
+        method: 'DELETE'
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                'Failed to delete bus pass'
+            );
+        }
+
+        alert(
+            'Bus pass deleted successfully!'
+        );
+
+        loadBusPasses();
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            'Error deleting bus pass.'
+        );
+
+    });
+
+}
+
+
+// ==========================================
+// INITIAL LOAD
+// ==========================================
+
+loadStudents();
+
+loadBusPasses();
+
+
+</script>
+
+
+</body>
+
+</html>
